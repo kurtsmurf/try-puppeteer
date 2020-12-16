@@ -5,7 +5,9 @@ const puppeteer = require('puppeteer');
     const page = await browser.newPage();
     await page.goto('https://example.com');
 
-    // This is trippy...
+    // This is trippy... it must be that page.evaluate teleports
+    // the function into a browser js thread and runs it there,
+    // because document is not defined in this scope.
     const dimensions = await page.evaluate(() => {
         return {
             width: document.documentElement.clientWidth,
